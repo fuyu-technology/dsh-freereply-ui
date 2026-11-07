@@ -1,0 +1,57 @@
+{
+  "name": "dsh-freereply-ui",
+  "version": "1.0.0",
+  "description": "DeepSeek Harness 插件：免token自动回复 —— 命中规则时直接发预设话术，不经过模型、不消耗 token；设置页内分「群号」「个人QQ号」两个选项栏。 | DSH plugin: token-free canned auto-reply with separate group / private-QQ tabs in the settings page.",
+  "author": "蝠羽科技",
+  "license": "Apache-2.0",
+  "type": "module",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "auto-reply",
+    "token-free",
+    "qq",
+    "batwing-tech"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "LICENSE",
+    "NOTICE",
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "icon.svg",
+    "README.md",
+    "locale/*.json"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=4.0.0-rc <5"
+  },
+  "engines": {
+    "node": "^22.15.0 || >=24.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fuyu-technology/dsh-freereply-ui.git"
+  },
+  "homepage": "https://github.com/fuyu-technology/dsh-freereply-ui#readme",
+  "bugs": {
+    "url": "https://github.com/fuyu-technology/dsh-freereply-ui/issues"
+  }
+}
