@@ -1,0 +1,26 @@
+# 插件包里**不应该**出现的东西。公开仓库里不要带任何个人数据。
+# （QQ 号、群号、会话正文、知识库、令牌文件一律不进版本库）
+
+# 知识库 / 长期记忆
+memory.json
+knowledge.json
+index.json
+*.jsonl
+*.zstd
+
+# 运行时配置与凭据
+config.json
+*.token
+*-token
+state/
+
+# 备份与临时文件
+*.bak
+*.bak-*
+*.orig
+*.tmp
+*.log
+
+# 依赖与构建产物
+node_modules/
+dist/
