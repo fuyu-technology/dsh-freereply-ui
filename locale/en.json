@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Token-free Auto Reply",
+    "description": "Sends a preset reply on a rule match without invoking the model, so no tokens are spent. Separate group / private-QQ tabs in the settings page. By 蝠羽科技 (fuyu-technology)"
+  }
+}
