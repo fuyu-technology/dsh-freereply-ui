@@ -323,6 +323,7 @@ window.__ModuleLoader__.load({
           if (silent && dirtyRef.current) return
           setRules({
             enabled: next.enabled !== false,
+            applyToOwner: next.applyToOwner === true,
             defaultReply: next.defaultReply || '',
             groups: next.groups || emptyTable(),
             privates: next.privates || emptyTable()
@@ -365,6 +366,7 @@ window.__ModuleLoader__.load({
         return {
           payload: {
             enabled: src?.enabled !== false,
+            applyToOwner: src?.applyToOwner === true,
             defaultReply: src?.defaultReply || '',
             groups: g,
             privates: p
@@ -390,6 +392,7 @@ window.__ModuleLoader__.load({
           setRules((prev) => (prev ? {
             ...prev,
             enabled: next.enabled !== false,
+            applyToOwner: next.applyToOwner === true,
             defaultReply: next.defaultReply || ''
           } : prev))
           setSummary(r.summary || null)
@@ -494,7 +497,7 @@ window.__ModuleLoader__.load({
         )
       }
 
-      const r = rules || { enabled: false, defaultReply: '', groups: {}, privates: {} }
+      const r = rules || { enabled: false, applyToOwner: false, defaultReply: '', groups: {}, privates: {} }
       const groups = r.groups || {}
       const privates = r.privates || {}
       const field = tab === 'groups' ? 'groups' : 'privates'
@@ -594,6 +597,30 @@ window.__ModuleLoader__.load({
             h('div', { className: 'fr-master-title' }, '总开关'),
             h('div', { className: 'fr-master-sub' },
               '开关改动即时生效；规则改动需要点下面的「保存规则」。'
+            )
+          )
+        ),
+
+        // 管理员豁免开关
+        //
+        // 管理员（ownerQQ）的消息默认**不走**免token 捷径 —— 审批、提问、指令都要走模型，
+        // 拦成固定话术会打断管理流程。但这样一来，用户拿自己的 QQ 测规则就永远测不出来，
+        // 所以这里给一个开关：打开后管理员的消息也按规则回。
+        h('div', { className: `fr-master${r.applyToOwner ? '' : ' off'}` },
+          h('button', {
+            className: 'fr-switch',
+            role: 'switch',
+            'aria-checked': r.applyToOwner ? 'true' : 'false',
+            'aria-label': '管理员消息也走免token自动回复',
+            onClick: () => {
+              setRules((p) => (p ? { ...p, applyToOwner: !p.applyToOwner } : p))
+              setDirty(true)
+            }
+          }),
+          h('div', { className: 'fr-master-text' },
+            h('div', { className: 'fr-master-title' }, '管理员消息也走免token自动回复'),
+            h('div', { className: 'fr-master-sub' },
+              '默认关闭：管理员的消息要留给审批/提问/指令。打开后拿自己的 QQ 也能测规则。'
             )
           )
         ),
