@@ -160,6 +160,9 @@ function normalizeFreeReply(input) {
   const src = input && typeof input === 'object' && !Array.isArray(input) ? input : {}
   return {
     enabled: src.enabled !== false,
+    // 管理员（ownerQQ）默认**不**走免token 捷径 —— 他们的消息要留给审批/提问/指令流程。
+    // 但默认开着的话，用户拿自己的 QQ 测规则永远测不出来，所以留一个开关。
+    applyToOwner: src.applyToOwner === true,
     defaultReply: String(src.defaultReply ?? '').trim().slice(0, MAX_REPLY_CHARS),
     groups: normalizeTable(src.groups),
     privates: normalizeTable(src.privates)
@@ -218,6 +221,7 @@ function validatePayload(body) {
   const errors = []
   const next = {
     enabled: body.enabled !== false,
+    applyToOwner: body.applyToOwner === true,
     defaultReply: String(body.defaultReply ?? '').trim(),
     privates: {},
     groups: {}
